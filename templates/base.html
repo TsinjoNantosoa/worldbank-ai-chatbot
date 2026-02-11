@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project_name }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" href="https://www.worldbank.org/etc/designs/worldbank/clientlibs-v2/img/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <img src="https://www.worldbank.org/content/dam/wbr/logo/logo-wb-header-en.svg" alt="World Bank" class="logo">
+                <h1>{{ project_name }}</h1>
+                <p class="subtitle">Ask questions about development indicators and country data</p>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <!-- Messages Area -->
+            <div id="messages" class="messages">
+                <!-- Welcome Message -->
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p><strong>👋 Bienvenue !</strong></p>
+                        <p>Je suis votre assistant spécialisé dans les données de développement de la Banque mondiale.</p>
+                        <p>Exemples de questions :</p>
+                        <ul>
+                            <li>Quel est le PIB de la France en 2023 ?</li>
+                            <li>Compare life expectancy between USA and China</li>
+                            <li>Show me CO2 emissions trends for Germany</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <input 
+                    type="text" 
+                    id="userInput" 
+                    placeholder="Posez votre question ici..."
+                    autocomplete="off"
+                >
+                <button id="sendBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <span>Recherche en cours...</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                💡 Portfolio Project | 
+                <a href="https://data.worldbank.org/" target="_blank">World Bank Data</a> | 
+                Powered by OpenAI GPT-4o-mini
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
