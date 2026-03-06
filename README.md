@@ -180,6 +180,56 @@ docker-compose logs -f
 - **API Swagger** : http://localhost:8000/docs
 - **Redoc** : http://localhost:8000/redoc
 
+### Compilation / Build (Backend & Frontend)
+
+Ci-dessous les commandes pratiques pour compiler/lancer le backend et le frontend en local.
+
+Backend (développement — PowerShell):
+
+```powershell
+cd "WORLD BANK"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Backend (production — Docker):
+
+```bash
+docker build -t wb-chatbot .
+docker run --rm -e OPENAI_API_KEY=$OPENAI_API_KEY -p 8000:8000 wb-chatbot
+```
+
+Frontend (développement — Vite):
+
+```bash
+cd "WORLD BANK/chat-frontend"
+npm install
+npm run dev
+# Ouvrir http://localhost:3000/
+```
+
+Frontend (build production):
+
+```bash
+cd "WORLD BANK/chat-frontend"
+npm ci
+npm run build
+# Servir le dossier `dist` (ex: `npx serve dist -s -l 3000`)
+```
+
+Remarque Windows & WSL:
+- Si la compilation frontend échoue sur Windows à cause de modules natifs, exécutez `npm ci` et `npm run build` depuis WSL (Ubuntu) :
+
+```bash
+# Dans WSL
+cd /mnt/c/Users/Tsinjo/Documents/H4H_Career/WORLD\ BANK/chat-frontend
+npm ci
+npm run build
+```
+
+
 ---
 
 ## ⚙️ Configuration
@@ -227,6 +277,19 @@ docker-compose logs -f
   }
 }
 ```
+
+---
+
+## 🧭 Canonical Project Layout (final)
+
+The repository has been reorganized into three canonical sub-projects to keep concerns separated and the repository easy to navigate:
+
+- `AGENT_CONVERSATIONEL/` — Backend chatbot and agent code (FastAPI app, `core/`, `models/`, tests, scripts).
+- `EXTRACTION_WEB/` — Data extractor and dataset; canonical extractor lives under `EXTRACTION_WEB/EXTRACTION_WB/` and canonical dataset is `EXTRACTION_WEB/data/world_bank_data.json`.
+- `FRONTEND/` — Static frontend assets (`static/`, `templates/`) for hosting the UI independently.
+
+See `CANONICAL_LOCATIONS.md` for quick run commands and notes. To keep the repo tidy, compiled caches (`*.pyc`) and local virtual environments are ignored; run `python scripts/cleanup_root.py` to remove leftover caches and empty root directories if you want to finalize cleanup.
+
 
 ### Variables d'Environnement (Production)
 
