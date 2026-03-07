@@ -23,6 +23,13 @@ logger = logging.getLogger(__name__)
 api_key = os.getenv("OPENAI_API_KEY")
 
 
+class DummyRetriever:
+    """Fallback retriever that returns no documents."""
+
+    def get_relevant_documents(self, query: str):
+        return []
+
+
 def load_vector_store(config: dict):
     """
     Build a FAISS retriever from the JSON data file.
@@ -36,10 +43,26 @@ def load_vector_store(config: dict):
     vector_store = None
     data_file = config.get("data_file", "data/world_bank_data.json")
 
-    if not os.path.exists(data_file):
-        raise FileNotFoundError(f"Data file required: {data_file}")
+    # Try several locations for the data file: as given, relative to project, and CWD
+    pf = Path(data_file)
+    resolved = None
+    if pf.exists():
+        resolved = pf
+    else:
+        # relative to repository package root (one level above core/)
+        repo_rel = Path(__file__).resolve().parents[1] / data_file
+        if repo_rel.exists():
+            resolved = repo_rel
+        else:
+            cwd_rel = Path.cwd() / data_file
+            if cwd_rel.exists():
+                resolved = cwd_rel
 
-    with open(data_file, "r", encoding="utf-8") as f:
+    if resolved is None:
+        logger.warning("Data file not found: %s. Returning empty retriever.", data_file)
+        return DummyRetriever()
+
+    with open(resolved, "r", encoding="utf-8") as f:
         json_data = json.load(f)
 
     logger.info(f"Loading data from {data_file}")
