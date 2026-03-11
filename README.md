@@ -732,8 +732,8 @@ MIT License - Voir fichier `LICENSE`
 
 **Tsinjo Nantosoa**  
 💼 Développeur Full-Stack | Expert IA & RAG  
-📧 [Email de contact]  
-🔗 [LinkedIn Profile]  
+📧 [tsinjonantosoa@gmail.com]  
+🔗 [[LinkedIn Profile](https://www.linkedin.com/in/sandaniaina-tsinjo-nantosoa-b6209a330/)]  
 💻 GitHub : [@TsinjoNantosoa](https://github.com/TsinjoNantosoa/worldbank-ai-chatbot)
 
 **Portfolio Project** — Mars 2026
@@ -750,3 +750,4 @@ MIT License - Voir fichier `LICENSE`
 ---
 
 **⭐ Si ce projet vous est utile, n'hésitez pas à le star sur GitHub !**
+
