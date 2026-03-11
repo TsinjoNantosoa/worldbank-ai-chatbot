@@ -1,12 +1,17 @@
-# 🌍 Chatbot World Bank Data - Projet Portfolio
+# 🌍 World Bank Data Chatbot - Portfolio IA Full-Stack
 
 ![Version](https://img.shields.io/badge/version-1.0-blue)
 ![Python](https://img.shields.io/badge/python-3.11+-green)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.118-orange)
 ![LangChain](https://img.shields.io/badge/LangChain-0.3-purple)
+![React](https://img.shields.io/badge/React-18+-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?logo=typescript)
 
-> **Assistant conversationnel intelligent pour explorer les données de la Banque Mondiale**  
-> Propulsé par RAG (Retrieval Augmented Generation), OpenAI GPT-4o-mini et FAISS
+> **Chatbot IA conversationnel pour explorer et analyser les données mondiales de développement**  
+> Architecture RAG complète avec FAISS + LangChain + OpenAI GPT-4o-mini  
+> Interface React moderne avec design glassmorphism et internationalisation FR/EN
+
+**🎓 Projet Portfolio** | Démonstration de compétences full-stack en IA générative, RAG et développement web moderne
 
 ---
 
@@ -31,14 +36,30 @@
 
 ### Qu'est-ce que ce Projet ?
 
-Le **Chatbot World Bank Data** est un système intelligent conçu pour :
-- ✅ Interroger en langage naturel les indicateurs de développement mondial
-- ✅ Fournir des données économiques, sociales et environnementales par pays
-- ✅ Citer systématiquement les sources et périodes temporelles
-- ✅ Maintenir une mémoire conversationnelle contextuelle
-- ✅ Se synchroniser automatiquement avec l'API World Bank
+Un **chatbot IA conversationnel full-stack** qui permet d'interroger en langage naturel les données de développement mondial de la Banque Mondiale. Ce projet de portfolio démontre une expertise complète en :
 
-### Cas d'Usage Principaux
+#### 🤖 Intelligence Artificielle & RAG
+- ✅ Architecture Retrieval Augmented Generation (RAG) avec embeddings vectoriels
+- ✅ Index FAISS pour recherche sémantique haute performance
+- ✅ Agent LangChain avec mémoire conversationnelle
+- ✅ Intégration OpenAI GPT-4o-mini (temperature=0.0 pour précision)
+- ✅ FAQ déterministe pré-LLM pour réponses instantanées
+
+#### 💻 Backend & API
+- ✅ API REST FastAPI avec validation Pydantic et documentation Swagger
+- ✅ Gestion multi-utilisateurs avec sessions isolées
+- ✅ Hot-reload automatique FAISS lors de mises à jour data
+- ✅ Normalisation intelligente (acronymes, pays, périodes)
+- ✅ Citations systématiques des sources avec URLs
+
+#### 🎨 Frontend Moderne
+- ✅ Interface React 18 + TypeScript avec Vite
+- ✅ Design glassmorphism avec animations Framer Motion
+- ✅ Internationalisation complète FR/EN (système i18n custom)
+- ✅ Suggestions contextuelles et quick replies adaptatives
+- ✅ Responsive design mobile-first avec accessibilité WCAG 2.1
+
+### Cas d'Usage Démontrés
 
 - 📊 **Recherche d'indicateurs** : "Quel est le PIB de la France en 2023 ?"
 - 🌐 **Comparaisons internationales** : "Compare le taux de chômage entre l'Allemagne et l'Espagne"
@@ -52,86 +73,74 @@ Le **Chatbot World Bank Data** est un système intelligent conçu pour :
 
 ### Interface Moderne & Professionnelle
 
-Le chatbot World Bank Data dispose d'une interface utilisateur moderne, responsive et bilingue (FR/EN) avec design glassmorphism et animations fluides.
+Le **Chatbot World Bank Data** dispose d'une interface utilisateur moderne et professionnelle, avec design glassmorphism, bilingue (FR/EN) et animations fluides. Ce projet de portfolio démontre une expertise en développement full-stack avec RAG, LangChain et React.
 
-#### 🎨 FAB & Callout (Bouton Flottant)
-
-<div align="center">
-  <img src="resultats/Screenshot 2026-03-11 113424.png" alt="FAB avec pulse animation" width="400"/>
-  <img src="resultats/Screenshot 2026-03-11 115611.png" alt="Callout speech bubble" width="400"/>
-  <p><em>Bouton flottant personnalisé avec badge de notification et bulle d'information</em></p>
-</div>
-
-#### 💬 Conversations & Réponses
+#### 🚀 Vue d'Ensemble de l'Interface
 
 <div align="center">
-  <img src="resultats/Screenshot 2026-03-11 115654.png" alt="Interface chat ouverte" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 115711.png" alt="Message avec réponse" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 115822.png" alt="Réponse détaillée" width="350"/>
-  <p><em>Interface de conversation avec bulles de messages stylisées et réponses structurées</em></p>
+  <img src="resultats/Screenshot 2026-03-11 131050.png" alt="Interface principale" width="700"/>
+  <p><em>Interface complète du chatbot avec header moderne, zone de conversation et composer</em></p>
 </div>
 
-#### 🌐 Support Multilingue (FR/EN)
+#### 💬 Suggestions Contextuelles & Interactions
 
 <div align="center">
-  <img src="resultats/Screenshot 2026-03-11 115854.png" alt="Interface en français" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 115912.png" alt="Interface en anglais" width="350"/>
-  <p><em>Basculement instantané entre français et anglais pour tous les éléments UI</em></p>
+  <img src="resultats/Screenshot 2026-03-11 131106.png" alt="Suggestions collapsibles" width="400"/>
+  <img src="resultats/Screenshot 2026-03-11 131155.png" alt="Réponse détaillée" width="400"/>
+  <p><em>Suggestions contextuelles collapsibles et réponses détaillées avec sources</em></p>
 </div>
 
-#### 🚀 Suggestions Contextuelles & Quick Replies
+#### 📊 Réponses Structurées avec Données
 
 <div align="center">
-  <img src="resultats/Screenshot 2026-03-11 120002.png" alt="Quick replies" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131050.png" alt="Suggestions contextuelles" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131106.png" alt="Toggle suggestions" width="350"/>
-  <p><em>Boutons de réponse rapide et suggestions contextuelles collapsibles</em></p>
+  <img src="resultats/Screenshot 2026-03-11 131213.png" alt="Données régions" width="400"/>
+  <img src="resultats/Screenshot 2026-03-11 131241.png" alt="Données temporelles" width="400"/>
+  <p><em>Réponses structurées avec listes HTML : régions couvertes et années disponibles (2014-2023)</em></p>
 </div>
 
-#### 📊 Réponses Détaillées avec Sources
-
-<div align="center">
-  <img src="resultats/Screenshot 2026-03-11 131155.png" alt="Réponse avec données" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131213.png" alt="Réponse régions" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131241.png" alt="Réponse années disponibles" width="350"/>
-  <p><em>Réponses structurées avec tableaux HTML, listes et citations de sources</em></p>
-</div>
-
-#### 🎯 FAQ Déterministes
+#### 🎯 FAQ Déterministes & Documentation
 
 <div align="center">
   <img src="resultats/Screenshot 2026-03-11 131251.png" alt="FAQ indicateurs" width="350"/>
   <img src="resultats/Screenshot 2026-03-11 131303.png" alt="FAQ téléchargement" width="350"/>
   <img src="resultats/Screenshot 2026-03-11 131340.png" alt="FAQ méthodologie" width="350"/>
-  <p><em>Réponses FAQ prédéfinies pour indicateurs, téléchargements et méthodologie</em></p>
+  <p><em>Système FAQ enrichi : indicateurs disponibles, options de téléchargement et méthodologie WB</em></p>
 </div>
 
-#### ✨ Design Glassmorphism & Animations
+#### ✨ Design Premium & Micro-interactions
 
 <div align="center">
-  <img src="resultats/Screenshot 2026-03-11 131352.png" alt="Glassmorphism bubbles" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131420.png" alt="Micro-interactions" width="350"/>
-  <img src="resultats/Screenshot 2026-03-11 131452.png" alt="Composer moderne" width="350"/>
-  <p><em>Effets glassmorphism, gradients mesh et micro-interactions soignées</em></p>
+  <img src="resultats/Screenshot 2026-03-11 131352.png" alt="Effets glassmorphism" width="400"/>
+  <img src="resultats/Screenshot 2026-03-11 131420.png" alt="Animations hover" width="400"/>
+  <p><em>Effets glassmorphism avec transparences et micro-interactions fluides au hover</em></p>
 </div>
 
-#### 🎨 Header Premium & Composer
+#### 🎨 Header & Zone de Composition
 
 <div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131452.png" alt="Composer moderne" width="400"/>
   <img src="resultats/Screenshot 2026-03-11 131523.png" alt="Header gradient" width="400"/>
-  <img src="resultats/Screenshot 2026-03-11 131533.png" alt="Composer avec focus" width="400"/>
-  <p><em>En-tête avec gradient animé et zone de composition moderne</em></p>
+  <p><em>Zone de composition moderne et header avec gradient animé + toggle langue FR/EN</em></p>
 </div>
 
-### 🎯 Fonctionnalités Visuelles
+#### 🌐 Interface Complète en Production
 
-- ✅ **Design Glassmorphism** — Effets de verre dépoli et transparences
-- ✅ **Gradients Mesh Animés** — Arrière-plans dynamiques et modernes
-- ✅ **Micro-interactions** — Animations fluides sur hover/click
-- ✅ **Responsive Design** — Adaptation mobile/tablet/desktop
-- ✅ **Dark Mode Ready** — Palette de couleurs optimisée
-- ✅ **Accessibilité WCAG** — Contrastes et aria-labels conformes
-- ✅ **Performance Optimisée** — Lazy loading et animations GPU
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131533.png" alt="Vue complète application" width="700"/>
+  <p><em>Vue d'ensemble de l'application en production avec tous les éléments UI</em></p>
+</div>
+
+### 🎯 Points Forts Techniques Démontrés
+
+- ✅ **Architecture RAG Complète** — FAISS + LangChain + OpenAI GPT-4o-mini
+- ✅ **Design System Moderne** — Glassmorphism, gradients mesh, animations GPU
+- ✅ **Internationalisation** — Système i18n complet FR/EN pour toute l'interface
+- ✅ **FAQ Intelligente** — Détection déterministe pré-LLM pour réponses instantanées
+- ✅ **Backend Robuste** — FastAPI + Memory Management + Auto-reload FAISS
+- ✅ **Frontend React/TypeScript** — Vite + Framer Motion + Tailwind CSS + DOMPurify
+- ✅ **UX Professionnelle** — Micro-interactions, suggestions contextuelles, citations sources
+- ✅ **Responsive & Accessible** — Mobile-first design, WCAG 2.1 AA compliance
+- ✅ **Performance Optimisée** — Lazy loading, code splitting, animations 60fps
 
 ---
 
@@ -721,19 +730,23 @@ MIT License - Voir fichier `LICENSE`
 
 ## 👤 Auteur
 
-**Tsinjo**  
-Portfolio : [Lien à ajouter]  
-GitHub : [@Tsinjo](https://github.com/Tsinjo)
+**Tsinjo Nantosoa**  
+💼 Développeur Full-Stack | Expert IA & RAG  
+📧 [Email de contact]  
+🔗 [LinkedIn Profile]  
+💻 GitHub : [@TsinjoNantosoa](https://github.com/TsinjoNantosoa/worldbank-ai-chatbot)
+
+**Portfolio Project** — Mars 2026
 
 ---
 
 ## 🙏 Remerciements
 
-- Banque Mondiale pour l'API ouverte
-- OpenAI pour GPT-4o-mini
-- Communauté LangChain pour les outils RAG
-- Alan Allman Associates (inspiration projet AAA)
+- **Banque Mondiale** pour l'API Open Data et documentation complète
+- **OpenAI** pour GPT-4o-mini et l'API Embeddings
+- **LangChain** pour le framework RAG et intégrations
+- **Community Open Source** — FAISS, FastAPI, React, Vite, Framer Motion
 
 ---
 
-**⭐ Si ce projet vous est utile, n'hésitez pas à le star !**
+**⭐ Si ce projet vous est utile, n'hésitez pas à le star sur GitHub !**
