@@ -10,7 +10,7 @@ type Props = {
 export default function QuickReplies({ replies, onSelect, layout = 'grid' }: Props) {
   if (!replies || replies.length === 0) return null
   return (
-    <div className={`quick-replies ${layout === 'list' ? 'vertical' : ''}`}>
+    <div className={`quick-replies ${layout === 'list' || layout === 'pills' ? 'vertical' : ''}`}>
       {replies.map((r, i) => (
         <button
           key={i}

@@ -14,7 +14,6 @@ export default function DynamicSuggestions({ suggestions, onSelect }: Props) {
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.25 }}
     >
-      <div className="suggestion-header">💡 Vous pourriez aussi demander :</div>
       <div className="suggestion-list">
         {suggestions.map((s, i) => (
           <motion.button

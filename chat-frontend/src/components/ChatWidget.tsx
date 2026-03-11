@@ -10,6 +10,7 @@ import Composer from './Composer'
 import TypingIndicator from './TypingIndicator'
 import DynamicSuggestions from './DynamicSuggestions'
 import Rating from './Rating'
+import { t, type Language } from '../i18n/translations'
 
 /* ─── Types ──────────────────────────────────────────────────────── */
 type Message = {
@@ -21,41 +22,31 @@ type Message = {
 
 type Reply = { icon: string; label: string }
 
-/* ─── Suggestions defaults ───────────────────────────────────────── */
-const DEFAULT_QUICK_REPLIES: Reply[] = [
-  { icon: '📊', label: 'PIB de la France en 2023' },
-  { icon: '🌍', label: 'Population mondiale 2023' },
-  { icon: '💹', label: 'Croissance économique USA' },
-  { icon: '🎓', label: 'Taux de scolarisation en Afrique' },
-  { icon: '🌿', label: 'Émissions CO₂ par pays' },
-]
-
 /* ─── Greeting ───────────────────────────────────────────────────── */
-function makeGreeting(): Message {
+function makeGreeting(lang: Language): Message {
   return {
     id: 'bot-greeting',
     role: 'bot',
     html: `
-      <p>Bonjour 👋 Je suis <strong>WB Assistant</strong>, votre guide des données de
-      la <strong>Banque Mondiale</strong>.</p>
-      <p style="margin-top:6px">Je peux vous renseigner sur le PIB, la croissance, 
-      l'inflation, la population, l'éducation, la santé, l'énergie et plus encore,
-      pour <strong>35+ pays</strong> de 2014 à 2023.</p>
-      <p style="margin-top:6px;font-size:12px;color:#7a9ab8">Cliquez sur une suggestion ou posez 
-      votre question ci-dessous.</p>
+      <p>${t(lang, 'greetingIntro')}</p>
+      <p style="margin-top:6px">${t(lang, 'greetingDetails')}</p>
+      <p style="margin-top:6px;font-size:12px;color:#7a9ab8">${t(lang, 'greetingPrompt')}</p>
     `,
   }
 }
 
 /* ─── Component ──────────────────────────────────────────────────── */
 export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
+  const [lang, setLang] = useState<Language>(() => (localStorage.getItem('wb_lang') as Language) || 'fr')
   const [open, setOpen] = useState(false)
   const [showCallout, setShowCallout] = useState(true)
-  const [messages, setMessages] = useState<Message[]>([makeGreeting()])
+  const [messages, setMessages] = useState<Message[]>([makeGreeting(lang)])
   const [sessionId] = useState(() => 'wb-' + Math.random().toString(36).slice(2, 10))
-  const [quickReplies, setQuickReplies] = useState<Reply[]>(DEFAULT_QUICK_REPLIES)
+  const [quickReplies, setQuickReplies] = useState<Reply[]>(t(lang, 'quickReplies'))
+  const [quickRepliesVisible, setQuickRepliesVisible] = useState(true)
   const [isTyping, setIsTyping] = useState(false)
   const [suggestions, setSuggestions] = useState<Reply[]>([])
+  const [showSuggestions, setShowSuggestions] = useState(false)
   const listRef = useRef<HTMLDivElement | null>(null)
 
   /* ── Restore history ──────────────────────────────────────────── */
@@ -76,19 +67,34 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
       .catch(() => {/* no history yet – keep greeting */})
   }, [])
 
-  /* ── Header actions (clear) ───────────────────────────────────── */
+  /* ── Header actions (clear, lang-change) ──────────────────────── */
   useEffect(() => {
     function onAction(e: Event) {
-      const type = (e as CustomEvent).detail?.type
+      const detail = (e as CustomEvent).detail
+      const type = detail?.type
       if (type === 'clear') {
-        setMessages([makeGreeting()])
+        setMessages([makeGreeting(lang)])
         setSuggestions([])
-        setQuickReplies(DEFAULT_QUICK_REPLIES)
+        setShowSuggestions(false)
+        setQuickReplies(t(lang, 'quickReplies'))
+        setQuickRepliesVisible(true)
+      } else if (type === 'lang-change') {
+        const newLang = detail.lang as Language
+        setLang(newLang)
+        // Régénérer le message de bienvenue dans la nouvelle langue
+        setMessages((prev) => {
+          if (prev.length === 1 && prev[0].id === 'bot-greeting') {
+            return [makeGreeting(newLang)]
+          }
+          return prev
+        })
+        setQuickReplies(t(newLang, 'quickReplies'))
+        setQuickRepliesVisible(true)
       }
     }
     window.addEventListener('chat-header-action', onAction)
     return () => window.removeEventListener('chat-header-action', onAction)
-  }, [])
+  }, [lang])
 
   /* ── Auto-scroll ─────────────────────────────────────────────── */
   useEffect(() => {
@@ -115,29 +121,32 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
     }
     setMessages((m) => [...m, userMsg])
     setQuickReplies([])
+    setQuickRepliesVisible(false)
     setSuggestions([])
+    setShowSuggestions(false)
     setIsTyping(true)
 
     try {
       const response = await axios.post(
         `${apiBaseUrl}/query`,
-        { query: text, user_id: sessionId, lang: 'fr' },
+        { query: text, user_id: sessionId, lang },
         { timeout: 60_000 }
       )
       const data = response.data
       const botMsg: Message = {
         id: 'b-' + Date.now(),
         role: 'bot',
-        html: DOMPurify.sanitize(data.answer ?? data.response ?? 'Désolé, pas de réponse.'),
+        html: DOMPurify.sanitize(data.answer ?? data.response ?? t(lang, 'noResponse')),
         sources: data.sources ?? [],
       }
       setMessages((m) => [...m, botMsg])
       setSuggestions(buildSuggestions(text, botMsg.html))
+      setShowSuggestions(false)
     } catch (err: any) {
       const errMsg: Message = {
         id: 'err-' + Date.now(),
         role: 'bot',
-        html: `<p style="color:#c0392b">⚠️ Erreur : impossible de joindre le serveur.<br/><small>${err?.message ?? ''}</small></p>`,
+        html: `<p style="color:#c0392b">${t(lang, 'errorMessage')}<br/><small>${err?.message ?? ''}</small></p>`,
       }
       setMessages((m) => [...m, errMsg])
     } finally {
@@ -148,18 +157,7 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
   /* ── Contextual suggestions ───────────────────────────────────── */
   function buildSuggestions(query: string, answer: string): Reply[] {
     const q = query.toLowerCase()
-    const pool: Reply[] = [
-      { icon: '📈', label: 'Quelle est la croissance du PIB de la Chine ?' },
-      { icon: '💹', label: 'Quel est le taux d\'inflation en Inde ?' },
-      { icon: '👥', label: 'Quelle est la population du Brésil ?' },
-      { icon: '🏥', label: 'Quel est le taux de mortalité infantile au Nigeria ?' },
-      { icon: '🎓', label: 'Quel est le taux de scolarisation au Maroc ?' },
-      { icon: '⚡', label: 'Consommation d\'énergie per capita au Japon ?' },
-      { icon: '🌳', label: 'Quelle est la superficie forestière en Russie ?' },
-      { icon: '📱', label: 'Taux d\'internet en Afrique ?' },
-      { icon: '📊', label: 'PIB per capita de l\'Allemagne ?' },
-      { icon: '🌍', label: 'Taux de chômage en Espagne ?' },
-    ]
+    const pool: Reply[] = t(lang, 'contextualSuggestions')
     // exclude questions similar to current
     const filtered = pool.filter(
       (s) => !s.label.toLowerCase().includes(q.slice(0, 8))
@@ -170,36 +168,50 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
   /* ── FAB ─────────────────────────────────────────────────────── */
   if (!open) {
     return (
-      <>
-        {showCallout && (
-          <motion.div
-            className="chat-callout"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0 }}
-          >
-            💬 Posez vos questions sur la Banque Mondiale
-          </motion.div>
-        )}
-        <motion.button
+      <motion.div
+        className="chat-fab-wrapper"
+        initial={{ opacity: 0, scale: 0.6, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+      >
+        <AnimatePresence>
+          {showCallout && (
+            <motion.div
+              className="chat-callout"
+              initial={{ opacity: 0, y: 14, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.9 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => setOpen(true)}
+            >
+              <div className="chat-callout-text">
+                {lang === 'fr'
+                  ? (<>Des questions sur les données mondiales ?<br/><strong>WB Assistant est là pour vous.</strong></>)
+                  : (<>Questions about global data?<br/><strong>WB Assistant is here for you.</strong></>)
+                }
+              </div>
+              <button
+                className="chat-callout-close"
+                onClick={(e) => { e.stopPropagation(); setShowCallout(false) }}
+                aria-label="Close"
+              >×</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
           className="chat-fab"
           onClick={() => setOpen(true)}
-          title="Ouvrir le chat"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          aria-label={t(lang, 'open')}
         >
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-              stroke="white" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"
-            />
-            <path d="M8 10h8M8 14h5" stroke="white" strokeWidth="1.7" strokeLinecap="round"/>
-          </svg>
-        </motion.button>
-      </>
+          <div className="chat-fab-pulse" />
+          <div className="chat-fab-content">
+            <div className="fab-wb-box">WB</div>
+            <div className="chat-fab-text">WORLD<br/>BANK</div>
+          </div>
+          <div className="chat-fab-badge">1</div>
+        </button>
+      </motion.div>
     )
   }
 
@@ -207,9 +219,9 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
   return (
     <motion.div
       className="chat-widget open"
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      initial={{ opacity: 0, y: 40, scale: 0.92 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Header */}
       <ChatHeader open={open} onToggle={() => setOpen(false)} />
@@ -221,38 +233,65 @@ export default function ChatWidget({ apiBaseUrl }: { apiBaseUrl: string }) {
           {messages.map((msg, i) => (
             <MessageBubble key={msg.id} message={msg} index={i} />
           ))}
+
+          {/* Quick replies inside message area (like AAA - vertical pills) */}
+          {quickRepliesVisible && quickReplies.length > 0 && (
+            <div style={{ marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: '#5a7a99', fontWeight: 600, marginBottom: 6 }}>
+                {lang === 'fr' ? 'Faites votre choix :' : 'Choose a topic:'}
+              </div>
+              <QuickReplies
+                replies={quickReplies}
+                onSelect={(text) => {
+                  setQuickRepliesVisible(false)
+                  setQuickReplies([])
+                  sendText(text)
+                }}
+                layout="pills"
+              />
+            </div>
+          )}
+
           {isTyping && <TypingIndicator />}
         </div>
 
-        {/* Dynamic suggestions after bot replies */}
-        <AnimatePresence>
-          {suggestions.length > 0 && !isTyping && (
-            <DynamicSuggestions
-              suggestions={suggestions}
-              onSelect={(label) => {
-                setSuggestions([])
-                sendText(label)
-              }}
-            />
-          )}
-        </AnimatePresence>
+        {/* Composer */}
+        <Composer onSend={(txt) => {
+          if (!txt.trim()) return
+          setQuickRepliesVisible(false)
+          setSuggestions([])
+          setShowSuggestions(false)
+          sendText(txt)
+        }} lang={lang} />
 
-        {/* Quick replies (shown at start) */}
-        {quickReplies.length > 0 && (
-          <QuickReplies
-            replies={quickReplies}
-            onSelect={(text) => {
-              setQuickReplies([])
-              sendText(text)
-            }}
-          />
+        {/* Collapsible suggestions toggle (below composer like AAA) */}
+        {suggestions.length > 0 && !isTyping && (
+          <div className="suggestions-section">
+            <button
+              className="suggestions-toggle"
+              onClick={() => setShowSuggestions((s) => !s)}
+              aria-expanded={showSuggestions}
+            >
+              {showSuggestions
+                ? (lang === 'fr' ? 'Masquer les suggestions' : 'Hide suggestions')
+                : (lang === 'fr' ? 'Voir les suggestions' : 'View suggestions')
+              }
+            </button>
+            {showSuggestions && (
+              <DynamicSuggestions
+                suggestions={suggestions}
+                onSelect={(label) => {
+                  setSuggestions([])
+                  setShowSuggestions(false)
+                  sendText(label)
+                }}
+              />
+            )}
+          </div>
         )}
 
         {/* Rating / disclaimer */}
         <Rating onRate={() => {}} />
-
-        {/* Composer */}
-        <Composer onSend={sendText} />
       </div>
     </motion.div>
   )

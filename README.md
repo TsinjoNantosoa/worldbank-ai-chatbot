@@ -13,6 +13,7 @@
 ## 📖 Table des Matières
 
 - [Vue d'Ensemble](#-vue-densemble)
+- [Résultats / Screenshots](#-résultats--screenshots)
 - [Fonctionnalités Principales](#-fonctionnalités-principales)
 - [Architecture](#-architecture)
 - [Installation](#-installation)
@@ -44,6 +45,93 @@ Le **Chatbot World Bank Data** est un système intelligent conçu pour :
 - 📈 **Tendances temporelles** : "Évolution de la population au Japon depuis 2000"
 - 📚 **Méthodologies** : "Comment est calculé l'indice de développement humain ?"
 - 🔍 **Découverte** : "Quels indicateurs environnementaux sont disponibles pour le Brésil ?"
+
+---
+
+## 📸 Résultats / Screenshots
+
+### Interface Moderne & Professionnelle
+
+Le chatbot World Bank Data dispose d'une interface utilisateur moderne, responsive et bilingue (FR/EN) avec design glassmorphism et animations fluides.
+
+#### 🎨 FAB & Callout (Bouton Flottant)
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 113424.png" alt="FAB avec pulse animation" width="400"/>
+  <img src="resultats/Screenshot 2026-03-11 115611.png" alt="Callout speech bubble" width="400"/>
+  <p><em>Bouton flottant personnalisé avec badge de notification et bulle d'information</em></p>
+</div>
+
+#### 💬 Conversations & Réponses
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 115654.png" alt="Interface chat ouverte" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 115711.png" alt="Message avec réponse" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 115822.png" alt="Réponse détaillée" width="350"/>
+  <p><em>Interface de conversation avec bulles de messages stylisées et réponses structurées</em></p>
+</div>
+
+#### 🌐 Support Multilingue (FR/EN)
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 115854.png" alt="Interface en français" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 115912.png" alt="Interface en anglais" width="350"/>
+  <p><em>Basculement instantané entre français et anglais pour tous les éléments UI</em></p>
+</div>
+
+#### 🚀 Suggestions Contextuelles & Quick Replies
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 120002.png" alt="Quick replies" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131050.png" alt="Suggestions contextuelles" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131106.png" alt="Toggle suggestions" width="350"/>
+  <p><em>Boutons de réponse rapide et suggestions contextuelles collapsibles</em></p>
+</div>
+
+#### 📊 Réponses Détaillées avec Sources
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131155.png" alt="Réponse avec données" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131213.png" alt="Réponse régions" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131241.png" alt="Réponse années disponibles" width="350"/>
+  <p><em>Réponses structurées avec tableaux HTML, listes et citations de sources</em></p>
+</div>
+
+#### 🎯 FAQ Déterministes
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131251.png" alt="FAQ indicateurs" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131303.png" alt="FAQ téléchargement" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131340.png" alt="FAQ méthodologie" width="350"/>
+  <p><em>Réponses FAQ prédéfinies pour indicateurs, téléchargements et méthodologie</em></p>
+</div>
+
+#### ✨ Design Glassmorphism & Animations
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131352.png" alt="Glassmorphism bubbles" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131420.png" alt="Micro-interactions" width="350"/>
+  <img src="resultats/Screenshot 2026-03-11 131452.png" alt="Composer moderne" width="350"/>
+  <p><em>Effets glassmorphism, gradients mesh et micro-interactions soignées</em></p>
+</div>
+
+#### 🎨 Header Premium & Composer
+
+<div align="center">
+  <img src="resultats/Screenshot 2026-03-11 131523.png" alt="Header gradient" width="400"/>
+  <img src="resultats/Screenshot 2026-03-11 131533.png" alt="Composer avec focus" width="400"/>
+  <p><em>En-tête avec gradient animé et zone de composition moderne</em></p>
+</div>
+
+### 🎯 Fonctionnalités Visuelles
+
+- ✅ **Design Glassmorphism** — Effets de verre dépoli et transparences
+- ✅ **Gradients Mesh Animés** — Arrière-plans dynamiques et modernes
+- ✅ **Micro-interactions** — Animations fluides sur hover/click
+- ✅ **Responsive Design** — Adaptation mobile/tablet/desktop
+- ✅ **Dark Mode Ready** — Palette de couleurs optimisée
+- ✅ **Accessibilité WCAG** — Contrastes et aria-labels conformes
+- ✅ **Performance Optimisée** — Lazy loading et animations GPU
 
 ---
 

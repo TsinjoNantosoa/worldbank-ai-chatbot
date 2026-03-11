@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { motion } from 'framer-motion'
+import { t, type Language } from '../i18n/translations'
 
-type Props = { onSend: (text: string) => void }
+type Props = { 
+  onSend: (text: string) => void
+  lang: Language
+}
 
-export default function Composer({ onSend }: Props) {
+export default function Composer({ onSend, lang }: Props) {
   const [value, setValue] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
@@ -49,7 +53,7 @@ export default function Composer({ onSend }: Props) {
         <textarea
           ref={textareaRef}
           className="composer-input"
-          placeholder="Posez votre question sur les données de la Banque Mondiale…"
+          placeholder={t(lang, 'composerPlaceholder')}
           value={value}
           onChange={handleChange}
           onKeyDown={handleKey}
@@ -58,8 +62,8 @@ export default function Composer({ onSend }: Props) {
         <motion.button
           className="composer-send-btn"
           onClick={submit}
-          aria-label="Envoyer"
-          title="Envoyer"
+          aria-label={t(lang, 'sendButton')}
+          title={t(lang, 'sendButton')}
           type="button"
           whileHover={{ scale: 1.07 }}
           whileTap={{ scale: 0.93 }}
